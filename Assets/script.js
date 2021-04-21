@@ -75,10 +75,10 @@ var timerTxt = document.getElementById("timer-text");
 var timerCount = document.getElementById("timer-count");
 
 //function to start quiz
-function startQ() {
-  startPg.style.display = "none";
+function displayQ() {
+  highScoreEl.style.display = "none";
   if (currentQstn === finalQstn) {
-    return highScore();
+    return highScoreEl();
   }
   var currentQuestion = qstns[currentQuestion];
   qs.innerHTML = qstns[currentQuestion].question;
@@ -88,6 +88,6 @@ function startQ() {
   btnD.innerHTML = currentQuestion.choices[3];
 }
 
-//eventlistent to start button
-startBtn.addEventListener("click", start);
+//eventlistent to buttons
+startBtn.addEventListener("click", displayQ);
 submitScoreBtn.addEventListener("click", submit);
