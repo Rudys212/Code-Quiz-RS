@@ -74,6 +74,8 @@ var timerEl = document.getElementById("timer");
 var timerTxt = document.getElementById("timer-text");
 var timerCount = document.getElementById("timer-count");
 
+function init() {}
+
 //function to start quiz
 function displayQ() {
   highScoreEl.style.display = "none";

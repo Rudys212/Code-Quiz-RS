@@ -18,3 +18,7 @@ main {
 qs-section button {
   display: inline-block;
 }
+
+button {
+  background-color: white;
+}
