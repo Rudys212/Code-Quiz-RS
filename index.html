@@ -14,12 +14,12 @@
   <header id="start-pg">
     <h1>Code Quiz<h1>
         <button id="start-button">Start Quiz</button>
-        <h2 id="start-pg-txt">The Code Quiz will test your knowledge of different areas of web development such as HTML,
+        <p id="start-pg-txt">The Code Quiz will test your knowledge of HTML,
           CSS and JavaScript.
           <br> Completing this quiz as quickly as possible will help you receive a high score.
           <br> A wrong answer will deduct time from the timer. The game is over if you run out of time.
           <br> Good Luck!
-        </h2>
+        </p>
   </header>
   <!-- container for questions -->
   <main>
@@ -30,7 +30,9 @@
         <button id="button-b">B</button>
         <button id="button-c">C</button>
         <button id="button-d">D</button>
+        <div id="scoreDisplay"></div>
       </div>
+
     </section>
     <!-- high score container -->
     <section>
@@ -48,8 +50,7 @@
     <section>
       <div id="timer">
         <div id="timer-text">
-          <div id="timer-count">Time Left</div>
-          <h3>Seconds Remaining</h3>
+          <h3 id="timer-count">Time Left: </h3>
         </div>
       </div>
     </section>
@@ -58,4 +59,3 @@
 </body>
 
 </html>
-

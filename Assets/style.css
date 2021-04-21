@@ -1,4 +1,4 @@
-* {
+/* * {
   background-color: #326efa;
   font-size: 20px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -8,7 +8,6 @@
 
 main {
   margin: 20px auto;
-  background-color: white;
   height: 300px;
   width: 700px;
   position: relative;
@@ -21,4 +20,4 @@ qs-section button {
 
 button {
   background-color: white;
-}
+} */

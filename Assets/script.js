@@ -5,55 +5,39 @@
 //var for penalized time
 //var for score
 //numerical variables
-var index = 0;
-var score = 0;
-var currentQstn = 0;
-var finalQstn = qstns.length;
-var highScore;
-//time * questions--> 15 sec * 5 questions=75 sec
-var timeCount = 75;
-var timer;
+
 // variables being set for questions
 var qstns = [
   {
     question: "Question 1: How many HTML heading levels exist?",
-    choices: ["a. 9", "b. 10", "c. 7", "d. 8"],
-    answer: "c. 7",
+    choices: ["9", "10", "7", "8"],
+    answer: "2",
   },
   {
     question: "Question 2: How many expressions/parts makeup a for loop?",
-    choices: ["a. 3", "b. 2", "c. 4", "d. 5"],
-    answer: "a. 3",
+    choices: ["3", "2", "4", "5"],
+    answer: "0",
   },
   {
     question: "Question 3: What CSS property makes text bold?",
-    choices: [
-      "a. font-style",
-      "b. font-weight",
-      "c. font-family",
-      "d. font-variant",
-    ],
-    answer: "b. font-weight",
+    choices: ["Font-style", "Font-weight", "Font-family", "Font-variant"],
+    answer: "1",
   },
   {
     question:
       "Question 4: Which of the following HTML element does not require a closing end tag?",
-    choices: ["a. <header>", "b. <div>", "c. <br>", "d. <p>"],
-    answer: "c. <br>",
+    choices: ["<header>", "<div>", "<br>", "<p>"],
+    answer: "2",
   },
   {
     question:
       "Question 5: When an array contains another array, it is known as what?",
-    choices: [
-      "a. double array",
-      "b. array:array",
-      "c. array++",
-      "d. nested array",
-    ],
-    answer: "d. nested array",
+    choices: ["Double Array", "Array:Array", "Array++", "Nested Array"],
+    answer: "3",
   },
 ];
-// variables for HTML elements
+
+// variables for HTML elements/DOM
 
 var mainSection = document.getElementById("main");
 var startPg = document.getElementById("start-pg");
@@ -73,23 +57,84 @@ var resetBtn = document.getElementById("resetBttn");
 var timerEl = document.getElementById("timer");
 var timerTxt = document.getElementById("timer-text");
 var timerCount = document.getElementById("timer-count");
+var scoreSection = document.getElementById("scoreDisplay");
 
+var finalQstn = qstns.length;
+var index = 0;
+var score = 0;
+var currentQstn = 0;
+var highScore;
+//time * questions--> 15 sec * 5 questions=75 sec
+var timeTotal = 75;
+var timer;
+
+//function that loads page with just the start pg intro
 function init() {}
+qsSection.style.display = "none";
+// highScoreSec.style.display = "none";
+timerEl.style.display = "none";
+highScoreEl.style.display = "none";
 
-//function to start quiz
+//function to get quiz to display on click of start button
 function displayQ() {
-  highScoreEl.style.display = "none";
+  qsSection.style.display = "block";
+  timerEl.style.display = "block";
+  highScoreSec.style.display = "none";
+  startPg.style.display = "none";
   if (currentQstn === finalQstn) {
     return highScoreEl();
   }
-  var currentQuestion = qstns[currentQuestion];
-  qs.innerHTML = qstns[currentQuestion].question;
+  var currentQuestion = qstns[currentQstn];
+  qs.innerHTML = currentQuestion.question;
   btnA.innerHTML = currentQuestion.choices[0];
   btnB.innerHTML = currentQuestion.choices[1];
   btnC.innerHTML = currentQuestion.choices[2];
   btnD.innerHTML = currentQuestion.choices[3];
 }
+function checkAnswer(event) {
+  event.preventDefault();
+  scoreSection.style.display = "block";
+  var p = document.createElement("p");
+  scoreSection.appendChild(p);
 
+  if (qstns[currentQstn].answer === event.target.value) {
+    p.textContent = "Correct!";
+  } else if (qstns[currentQstn].answer !== event.target.value) {
+    timerCount = timerCount - 10;
+    p.textContent = "Wrong!";
+
+    if (currentQstn < qstns.length) {
+      currentQstn++;
+    }
+    qsSection(currentQstn);
+  }
+}
+//adds function for quiz timer to begin on the click of start button
+function startQuizTimer() {
+  highScoreSec.style.display = "none";
+  startPg.style.display = "none";
+  displayQ();
+  timer = setInterval(function () {
+    timeTotal--;
+    timerCount.textContent = "Time Left: " + timeTotal;
+
+    if (timeTotal === 0) {
+      clearInterval(timer);
+      scoreDisplay();
+    }
+  }, 1000);
+  timerEl.style.display = "block";
+}
+
+function scoreDisplay() {
+  // timerEl.style.display = "none";
+  highScoreEl.style.display = "flex";
+  clearInterval(timer);
+  initialEl.value = "";
+  highScoreEl.innerHTML = score + " out of " + qstns.length + " correct!";
+}
+
+submitScoreBtn.addEventListener("click", startQuizTimer);
 //eventlistent to buttons
-startBtn.addEventListener("click", displayQ);
-submitScoreBtn.addEventListener("click", submit);
+
+startBtn.addEventListener("click", startQuizTimer);
