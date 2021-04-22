@@ -57,7 +57,6 @@ var resetBtn = document.getElementById("resetBttn");
 var timerEl = document.getElementById("timer");
 var timerTxt = document.getElementById("timer-text");
 var timerCount = document.getElementById("timer-count");
-var scoreSection = document.getElementById("scoreDisplay");
 
 var finalQstn = qstns.length;
 var index = 0;
@@ -71,6 +70,7 @@ var timer;
 //function that loads page with just the start pg intro
 function init() {}
 qsSection.style.display = "none";
+startPg.style.display = "block";
 // highScoreSec.style.display = "none";
 timerEl.style.display = "none";
 highScoreEl.style.display = "none";
@@ -79,10 +79,10 @@ highScoreEl.style.display = "none";
 function displayQ() {
   qsSection.style.display = "block";
   timerEl.style.display = "block";
-  highScoreSec.style.display = "none";
+  highScoreEl.style.display = "block";
   startPg.style.display = "none";
   if (currentQstn === finalQstn) {
-    return highScoreEl();
+    return scoreDisplay();
   }
   var currentQuestion = qstns[currentQstn];
   qs.innerHTML = currentQuestion.question;
@@ -91,24 +91,7 @@ function displayQ() {
   btnC.innerHTML = currentQuestion.choices[2];
   btnD.innerHTML = currentQuestion.choices[3];
 }
-function checkAnswer(event) {
-  event.preventDefault();
-  scoreSection.style.display = "block";
-  var p = document.createElement("p");
-  scoreSection.appendChild(p);
 
-  if (qstns[currentQstn].answer === event.target.value) {
-    p.textContent = "Correct!";
-  } else if (qstns[currentQstn].answer !== event.target.value) {
-    timerCount = timerCount - 10;
-    p.textContent = "Wrong!";
-
-    if (currentQstn < qstns.length) {
-      currentQstn++;
-    }
-    qsSection(currentQstn);
-  }
-}
 //adds function for quiz timer to begin on the click of start button
 function startQuizTimer() {
   highScoreSec.style.display = "none";
@@ -124,15 +107,19 @@ function startQuizTimer() {
     }
   }, 1000);
   timerEl.style.display = "block";
+  qsSection.style.display = "block";
 }
 
 function scoreDisplay() {
-  // timerEl.style.display = "none";
-  highScoreEl.style.display = "flex";
+  startPg.style.display = "none";
+  highScoreSec.style.display = "flex";
+
   clearInterval(timer);
   initialEl.value = "";
   highScoreEl.innerHTML = score + " out of " + qstns.length + " correct!";
 }
+
+function checkAnswer(correctAnswer) {}
 
 submitScoreBtn.addEventListener("click", startQuizTimer);
 //eventlistent to buttons
