@@ -11,29 +11,29 @@ var qstns = [
   {
     question: "Question 1: How many HTML heading levels exist?",
     choices: ["9", "10", "7", "8"],
-    answer: "2",
+    answer: "10",
   },
   {
     question: "Question 2: How many expressions/parts makeup a for loop?",
     choices: ["3", "2", "4", "5"],
-    answer: "0",
+    answer: "3",
   },
   {
     question: "Question 3: What CSS property makes text bold?",
     choices: ["Font-style", "Font-weight", "Font-family", "Font-variant"],
-    answer: "1",
+    answer: "Font-weight",
   },
   {
     question:
       "Question 4: Which of the following HTML element does not require a closing end tag?",
-    choices: ["<header>", "<div>", "<br>", "<p>"],
-    answer: "2",
+    choices: ["header", "div", "br", "p"],
+    answer: "br",
   },
   {
     question:
       "Question 5: When an array contains another array, it is known as what?",
     choices: ["Double Array", "Array:Array", "Array++", "Nested Array"],
-    answer: "3",
+    answer: "Nest Array",
   },
 ];
 
@@ -57,12 +57,12 @@ var resetBtn = document.getElementById("resetBttn");
 var timerEl = document.getElementById("timer");
 var timerTxt = document.getElementById("timer-text");
 var timerCount = document.getElementById("timer-count");
+var correctWrongSection = document.getElementById("rightWrongsection");
 
 var finalQstn = qstns.length;
-var index = 0;
 var score = 0;
 var currentQstn = 0;
-var highScore;
+var userAnswer;
 //time * questions--> 15 sec * 5 questions=75 sec
 var timeTotal = 75;
 var timer;
@@ -81,6 +81,7 @@ function displayQ() {
   timerEl.style.display = "block";
   highScoreEl.style.display = "block";
   startPg.style.display = "none";
+  correctWrongSection.style = "none";
   if (currentQstn === finalQstn) {
     return scoreDisplay();
   }
@@ -119,7 +120,22 @@ function scoreDisplay() {
   highScoreEl.innerHTML = score + " out of " + qstns.length + " correct!";
 }
 
-function checkAnswer(correctAnswer) {}
+function checkAnswer(answerInput) {
+  userAnswer = qstns[currentQstn].answer;
+
+  if (answerInput === userAnswer && currentQstn !== finalQstn) {
+    score++;
+    correctWrongSection.innerHTML = "Correct! Good Job!";
+    currentQstn++;
+    displayQ();
+  } else if (answerInput !== userAnswer && currentQstn !== finalQstn) {
+    correctWrongSection.innerHTML = "Wrong! Nice Try!";
+    currentQstn++;
+    displayQ();
+  } else {
+    scoreDisplay();
+  }
+}
 
 submitScoreBtn.addEventListener("click", startQuizTimer);
 //eventlistent to buttons
