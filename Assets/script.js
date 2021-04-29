@@ -68,13 +68,14 @@ var timeTotal = 75;
 var timer;
 
 //function that loads page with just the start pg intro
-function init() {}
-qsSection.style.display = "none";
-startPg.style.display = "block";
-// highScoreSec.style.display = "none";
-timerEl.style.display = "none";
-highScoreEl.style.display = "none";
-
+function init() {
+  qsSection.style.display = "none";
+  startPg.style.display = "block";
+  // highScoreSec.style.display = "none";
+  timerEl.style.display = "none";
+  highScoreEl.style.display = "none";
+}
+init();
 //function to get quiz to display on click of start button
 function displayQ() {
   qsSection.style.display = "block";
@@ -88,9 +89,13 @@ function displayQ() {
   var currentQuestion = qstns[currentQstn];
   qs.innerHTML = currentQuestion.question;
   btnA.innerHTML = currentQuestion.choices[0];
+  btnA.setAttribute("value", currentQuestion.choices[0]);
   btnB.innerHTML = currentQuestion.choices[1];
+  btnB.setAttribute("value", currentQuestion.choices[1]);
   btnC.innerHTML = currentQuestion.choices[2];
+  btnC.setAttribute("value", currentQuestion.choices[2]);
   btnD.innerHTML = currentQuestion.choices[3];
+  btnD.setAttribute("value", currentQuestion.choices[3]);
 }
 
 //adds function for quiz timer to begin on the click of start button
@@ -113,27 +118,34 @@ function startQuizTimer() {
 
 function scoreDisplay() {
   startPg.style.display = "none";
-  highScoreSec.style.display = "flex";
-
+  // highScoreSec.style.display = "block";
+  qsSection.style.display = "none";
+  highScoreEl.style.display = "block";
   clearInterval(timer);
   initialEl.value = "";
-  highScoreEl.innerHTML = score + " out of " + qstns.length + " correct!";
 }
+//   highScoreEl.innerHTML = score + " out of " + qstns.length + " correct!";
+// }
 
-function checkAnswer(answerInput) {
+function checkAnswer(t) {
   userAnswer = qstns[currentQstn].answer;
-
-  if (answerInput === userAnswer && currentQstn !== finalQstn) {
+  var answerInput = t.value;
+  console.log(userAnswer);
+  console.log(answerInput);
+  if (answerInput === userAnswer) {
     score++;
     correctWrongSection.innerHTML = "Correct! Good Job!";
     currentQstn++;
-    displayQ();
-  } else if (answerInput !== userAnswer && currentQstn !== finalQstn) {
+    // displayQ();
+  } else if (answerInput !== userAnswer) {
     correctWrongSection.innerHTML = "Wrong! Nice Try!";
     currentQstn++;
-    displayQ();
-  } else {
+    // displayQ();
+  }
+  if (currentQstn === qstns.length) {
     scoreDisplay();
+  } else {
+    displayQ();
   }
 }
 
@@ -141,3 +153,6 @@ submitScoreBtn.addEventListener("click", startQuizTimer);
 //eventlistent to buttons
 
 startBtn.addEventListener("click", startQuizTimer);
+
+// && currentQstn !== finalQstn)
+// && currentQstn !== finalQstn
